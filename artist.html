@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="MDUI/css/mdui.min.css" />
+    <script src="MDUI/js/mdui.min.js"></script>
+    <script src="reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+    <div class="text-box">
+        <h1 id="rt-fans-num">0</h1>
+    </div>
+</body>
+
+<style>
+    body {
+        font-family: "得意黑" !important;
+        background-color: #303030;
+    }
+
+    #rt-fans-num {
+        font-variant-numeric: tabular-nums;
+        text-align: center;
+        font-size: 380px !important;
+        font-weight: 900;
+        margin: 120px 0px 0px 0px;
+
+        color: rgba(0, 0, 0, 0);
+        -webkit-text-stroke: 1px #9e9e9e;
+        /* text-shadow: #9e9e9e 0 1px 0; */
+    }
+</style>
+
+<script>
+    var $ = mdui.$;
+    const numSpan = $("#rt-fans-num");
+    const ws = new ReconnectingWebSocket("ws://127.0.0.1:12102");
+    // const COLOR_DOWN = "#34E36F";
+    // numSpan.css("color", COLOR_DOWN);
+    ws.addEventListener("open", () => {
+        ws.send(JSON.stringify({ type: "rt" }));
+    });
+    ws.addEventListener("message", msg => {
+        console.debug("[WS]收到数据", msg);
+        var res = JSON.parse(msg.data);
+        if (res.type == "rt") {
+            numSpan.text(`${res.data[1]}`);
+        }
+    });
+</script>
