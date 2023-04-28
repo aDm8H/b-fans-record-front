@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.staticfile.org/mdui/1.0.2/css/mdui.min.css" />
+    <script src="https://cdn.staticfile.org/mdui/1.0.2/js/mdui.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/5.4.2/echarts.min.js"></script>
+    <script src="https://cdn.staticfile.org/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdn.staticfile.org/reconnecting-websocket/1.0.0/reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+    <div class="mdui-container">
+        <div class="mdui-typo">
+            <h1 id="rt" style="margin-top: unset">
+                <small>实时粉丝数：</small>
+                <span id="rt-fans">
+                    <i class="mdui-icon material-icons" id="trending-arrow"></i>
+                    <strong><span id="rt-fans-num">0</span></strong>
+                </span>
+                <small>更新时间：<span id="update-time"></span></small>
+            </h1>
+
+            <div class="hor-chart-box">
+                <div class="mdui-col-xs-6">
+                    <div id="dayChart" style="height: 27rem"></div>
+                </div>
+                <div class="mdui-col-xs-6">
+                    <div id="recentChart" style="padding-left: 5px; height: 27rem"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+    #cr-time {
+        font-size: x-large !important;
+        font-weight: bold;
+    }
+    #rt-fans,
+    #trending-arrow {
+        font-size: 4rem !important;
+    }
+</style>
+
+<script>
+    /* 在此自定义图表参数
+     * LENGTH字段: 每5秒为1. 如: 10分钟=600秒=120单位
+     * HUGECHART_TYPE字段: 若想要左侧字段显示全部数据, 则填入"all"; 若需要显示部分时间数据, 则填入"range"并填写LENGTH.
+     */
+
+    //左侧图表
+    const HUGECHART_TYPE = "range",
+        HUGECHART_LENGTH = 17280,
+        HUGECHART_TEXT = "最近24小时";
+    //右侧图表
+    const RECENT_LENGTH = 120,
+        RECENT_DURATION = "最近10分钟";
+</script>
+
+<script src="script.js"></script>
